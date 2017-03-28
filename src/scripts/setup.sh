@@ -15,35 +15,6 @@ CONFIG_FILENAME="config.yaml"
 CONFIG_FILE_SYSTEM="${CONFIG_SYSTEM_DIRECTORY}/${CONFIG_FILENAME}"
 CONFIG_FILE_LOCAL="./${CONFIG_FILENAME}"
 
-if [ "$EUID" -ne 0 ]; then
-    echo "Please run as root"
-	exit
-fi
-
-echo "TIP: When there is a value in brackets like [default_value], hit Enter to use it."
-echo ""
-
-
-if [ "$ALEXASRC_DIRECTORY" != "$ALEXASRC_DIRECTORY_CORRECT" ]; then
-
-    echo "You haven't downloaded AlexaPi into /opt. As a result of that, you won't be able to run AlexaPi on boot."
-    echo "If you wish to be able to run AlexaPi on boot, please interrupt this script and download into /opt."
-    echo ""
-    echo "Note: If you're an advanced user, you can install the init script manually and edit it to reflect your install path, but we don't provide any guarantees."
-    read -r -p "Interrupt? (Y/n)? " interrupt_script
-
-    case ${interrupt_script} in
-            [nN] )
-                echo "Carrying on ..."
-            ;;
-            * )
-                echo "Script interrupted. Please download AlexaPi into /opt as in project documentation."
-                exit
-            ;;
-    esac
-
-fi
-
 cd "${SCRIPT_DIRECTORY}"
 
 OS_default="debian"
@@ -87,42 +58,6 @@ source ./inc/os/${OS}.sh
 
 # shellcheck disable=SC1090
 source ./inc/device/${DEVICE}.sh
-
-if [ "$ALEXASRC_DIRECTORY" == "$ALEXASRC_DIRECTORY_CORRECT" ]; then
-
-    echo "Do you want AlexaPi to run on boot?"
-	echo "You have these options: "
-	echo "0 - NO"
-	echo "1 - yes, use systemd (default, RECOMMENDED and awesome)"
-	echo "2 - yes, use a classic init script (for a very old PC or an embedded system)"
-	read -r -p "Which option do you prefer? [1]: " init_type
-
-    if [ "${init_type// /}" != "0" ]; then
-
-        if [ "${init_type}" == "" ]; then
-            init_type="1"
-        fi
-
-        monitorAlexa=false
-
-        create_user
-        gpio_permissions
-
-        cd "${SCRIPT_DIRECTORY}"
-
-        case ${init_type} in
-            2 ) # classic
-                init_classic ${monitorAlexa}
-            ;;
-
-            * ) # systemd
-                init_systemd ${monitorAlexa}
-            ;;
-        esac
-
-    fi
-
-fi
 
 read -r -p "Would you like to also install Airplay support (Y/n)? " shairport
 
@@ -214,11 +149,3 @@ config_set 'Client_Secret' "${Client_Secret}"
 
 
 run_python ./auth_web.py
-
-echo ""
-echo "######################################################################################################"
-echo "IMPORTANT NOTICE:"
-echo "If you use a desktop OS, you HAVE TO set up your system audio so services like AlexaPi can use it too."
-echo "See https://github.com/alexa-pi/AlexaPi/wiki/Audio-setup-&-debugging#pulseaudio"
-echo "######################################################################################################"
-echo ""

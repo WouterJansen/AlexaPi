@@ -110,11 +110,11 @@ def rotateBlue():
 
 
 def setupNeoPixel():
-    print "STARTING NEOPIXEL"
+    logger.info("Setting up NeoPixel")
     try:
         strip.begin()
     except:
-         logger.error("NeoPixel couldn't be started.")
+         logger.error("NeoPixel couldn't be started")
 
 
 

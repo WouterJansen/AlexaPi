@@ -1,7 +1,7 @@
 import time
 from abc import ABCMeta
 import logging
-
+import NeoPixel
 from .baseplatform import BasePlatform
 
 logger = logging.getLogger(__name__)
@@ -13,34 +13,29 @@ class RPiLikePlatform(BasePlatform):
 	__metaclass__ = ABCMeta
 
 	def __init__(self, config, platform_name, p_GPIO):
-
+		
 		global GPIO
 		GPIO = p_GPIO
-
+		
 		super(RPiLikePlatform, self).__init__(config, platform_name)
 
 		self.button_pressed = False
 
 	def setup(self):
-		GPIO.setup(self._pconfig['button'], GPIO.IN, pull_up_down=GPIO.PUD_UP)
-		GPIO.setup(self._pconfig['rec_light'], GPIO.OUT)
-		GPIO.setup(self._pconfig['plb_light'], GPIO.OUT)
-		GPIO.output(self._pconfig['rec_light'], GPIO.LOW)
-		GPIO.output(self._pconfig['plb_light'], GPIO.LOW)
+		NeoPixel.setupNeoPixel()
 
 	def indicate_failure(self):
 		for _ in range(0, 5):
 			time.sleep(.1)
-			GPIO.output(self._pconfig['rec_light'], GPIO.HIGH)
+			NeoPixel.errorRed()
 			time.sleep(.1)
-			GPIO.output(self._pconfig['rec_light'], GPIO.LOW)
+			NeoPixel.turnOff()
 
 	def indicate_success(self):
 		for _ in range(0, 5):
+			NeoPixel.fadeIn(Color(0, 0, 255))
 			time.sleep(.1)
-			GPIO.output(self._pconfig['plb_light'], GPIO.HIGH)
-			time.sleep(.1)
-			GPIO.output(self._pconfig['plb_light'], GPIO.LOW)
+			NeoPixel.fadeOut(Color(0, 0, 255))
 
 	def after_setup(self, trigger_callback=None):
 
@@ -51,14 +46,22 @@ class RPiLikePlatform(BasePlatform):
 			GPIO.add_event_detect(self._pconfig['button'], GPIO.FALLING, callback=self.detect_button, bouncetime=100)
 
 	def indicate_recording(self, state=True):
-		GPIO.output(self._pconfig['rec_light'], GPIO.HIGH if state else GPIO.LOW)
+		if state is True:
+			NeoPixel.fadeIn(Color(255, 0, 0))
+		if state is False:
+			NeoPixel.fadeOut(Color(255, 0, 0))
 
 	def indicate_playback(self, state=True):
-		GPIO.output(self._pconfig['plb_light'], GPIO.HIGH if state else GPIO.LOW)
+		if state is True:
+			NeoPixel.fadeIn(Color(0, 255, 0))
+		if state is False:
+			NeoPixel.fadeOut(Color(0, 255, 0))
 
 	def indicate_processing(self, state=True):
-		GPIO.output(self._pconfig['plb_light'], GPIO.HIGH if state else GPIO.LOW)
-		GPIO.output(self._pconfig['rec_light'], GPIO.HIGH if state else GPIO.LOW)
+		if state is True:
+			NeoPixel.fadeIn(Color(255,255, 0))
+		if state is False:
+			NeoPixel.fadeOut(Color(255,255, 0))
 
 	def detect_button(self, channel=None): # pylint: disable=unused-argument
 		self.button_pressed = True

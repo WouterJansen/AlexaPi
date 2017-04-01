@@ -48,6 +48,7 @@ class SetupGreen(threading.Thread):
                 for i in range(0, strip.numPixels(), 3):
                     strip.setPixelColor(i + q, Color(255, 0, 0))
                 strip.show()
+                print "test"
                 time.sleep(50 / 1000.0)
                 for i in range(0, strip.numPixels(), 3):
                     strip.setPixelColor(i + q, 0)

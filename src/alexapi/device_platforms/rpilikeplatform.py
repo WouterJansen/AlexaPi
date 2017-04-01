@@ -165,23 +165,23 @@ class RPiLikePlatform(BasePlatform):
 
 	def indicate_recording(self, state=True):
 		logger.info("recording")
-		if state is True:
+		#if state is True:
 			#errorRed()
-		if state is False:
+		#if state is False:
 			#turnOff()
 
 	def indicate_playback(self, state=True):
 		logger.info("playback")
-		if state is True:
+		#if state is True:
 			#errorRed()
-		if state is False:
+		#if state is False:
 			#turnOff()
 
 	def indicate_processing(self, state=True):
 		logger.info("processing")
-		if state is True:
+		#if state is True:
 			#errorRed()
-		if state is False:
+		#if state is False:
 			#turnOff()
 
 	def detect_button(self, channel=None): # pylint: disable=unused-argument

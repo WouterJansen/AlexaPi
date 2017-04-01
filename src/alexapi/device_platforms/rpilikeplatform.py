@@ -2,6 +2,7 @@ import time
 from abc import ABCMeta
 import logging
 import NeoPixel
+from neopixel import *
 from .baseplatform import BasePlatform
 
 logger = logging.getLogger(__name__)

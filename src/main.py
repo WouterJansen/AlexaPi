@@ -582,8 +582,6 @@ if __name__ == "__main__":
     setupNeoThread = NeoPixel.SetupGreen()
     setupNeoThread.daemon = True
     setupNeoThread.start()
-    time.sleep(10)
-    setupNeoThread.done = True
     for sig in (signal.SIGABRT, signal.SIGILL, signal.SIGINT, signal.SIGSEGV, signal.SIGTERM):
         signal.signal(sig, cleanup)
 
@@ -626,7 +624,8 @@ if __name__ == "__main__":
 	
     if not silent:
         player.play_speech(resources_path + "hello.mp3")
-
+    time.sleep(10)
+    setupNeoThread.done = True
     platform.indicate_success()
     logger.info("Setup Completed")
     print '-' * 60

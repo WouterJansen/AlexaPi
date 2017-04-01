@@ -1,8 +1,6 @@
 import sys
 import threading
 import time
-import main
-from datetime import datetime
 from neopixel import *
 from PeakMonitor import PeakMonitor
 

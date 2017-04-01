@@ -174,14 +174,14 @@ class RPiLikePlatform(BasePlatform):
 			turnOff()
 
 	def indicate_playback(self, state=True):
-		logger.info("recording")
+		logger.info("playback")
 		if state is True:
 			errorRed()
 		if state is False:
 			turnOff()
 
 	def indicate_processing(self, state=True):
-		logger.info("recording")
+		logger.info("processing")
 		if state is True:
 			errorRed()
 		if state is False:

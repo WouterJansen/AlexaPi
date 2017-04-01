@@ -621,7 +621,6 @@ if __name__ == "__main__":
         'platform'].platform_callback if 'platform' in triggers.triggers else None
     platform.after_setup(platform_trigger_callback)
     triggers.enable()
-    time.sleep(3)
 	
     if not silent:
         player.play_speech(resources_path + "hello.mp3")
@@ -631,5 +630,4 @@ if __name__ == "__main__":
     print '-' * 60
     setupNeoThread.done = True
     while True:
-	NeoPixel.rotateBlue()
         time.sleep(1)

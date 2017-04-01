@@ -23,6 +23,7 @@ class RPiLikePlatform(BasePlatform):
 		self.button_pressed = False
 
 	def setup(self):
+		logger.info("setting up NeoPixel")
 		GPIO.setup(self._pconfig['button'], GPIO.IN, pull_up_down=GPIO.PUD_UP)
 		GPIO.setup(self._pconfig['rec_light'], GPIO.OUT)
 		GPIO.setup(self._pconfig['plb_light'], GPIO.OUT)
@@ -31,6 +32,7 @@ class RPiLikePlatform(BasePlatform):
 		NeoPixel.setupNeoPixel()
 
 	def indicate_failure(self):
+		logger.info("failure")
 		for _ in range(0, 5):
 			time.sleep(.1)
 			NeoPixel.errorRed()
@@ -38,6 +40,7 @@ class RPiLikePlatform(BasePlatform):
 			NeoPixel.turnOff()
 
 	def indicate_success(self):
+		logger.info("success")
 		for _ in range(0, 5):
 			NeoPixel.fadeIn(Color(0, 0, 255))
 			time.sleep(.1)
@@ -52,18 +55,21 @@ class RPiLikePlatform(BasePlatform):
 			GPIO.add_event_detect(self._pconfig['button'], GPIO.FALLING, callback=self.detect_button, bouncetime=100)
 
 	def indicate_recording(self, state=True):
+		logger.info("recording")
 		if state is True:
 			NeoPixel.fadeIn(Color(255, 0, 0))
 		if state is False:
 			NeoPixel.fadeOut(Color(255, 0, 0))
 
 	def indicate_playback(self, state=True):
+		logger.info("playback")
 		if state is True:
 			NeoPixel.fadeIn(Color(0, 255, 0))
 		if state is False:
 			NeoPixel.fadeOut(Color(0, 255, 0))
 
 	def indicate_processing(self, state=True):
+		logger.info("processing")
 		if state is True:
 			NeoPixel.fadeIn(Color(255,255, 0))
 		if state is False:

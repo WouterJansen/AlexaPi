@@ -139,9 +139,6 @@ class RPiLikePlatform(BasePlatform):
 		GPIO.output(self._pconfig['rec_light'], GPIO.LOW)
 		GPIO.output(self._pconfig['plb_light'], GPIO.LOW)
 		strip.begin()
-		errorRed()
-		time.sleep(3)
-		turnOff()
 
 	def indicate_failure(self):
 		logger.info("failure")

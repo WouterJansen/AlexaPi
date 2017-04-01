@@ -1,8 +1,6 @@
 import sys
 import threading
 import time
-import logging
-import coloredlogs
 import main
 from datetime import datetime
 from neopixel import *
@@ -12,28 +10,6 @@ from PeakMonitor import PeakMonitor
 SINK_NAME = 'alsa_output.usb-C-Media_Electronics_Inc._USB_PnP_Sound_Device-00-Device.analog-stereo'
 METER_RATE = 344
 strip = Adafruit_NeoPixel(12, 18, 800000, 5, False, 255)
-
-logging.basicConfig(format='%(asctime)s %(levelname)s: %(message)s')
-coloredlogs.DEFAULT_FIELD_STYLES = {
-    'hostname': {'color': 'magenta'},
-    'programname': {'color': 'cyan'},
-    'name': {'color': 'blue'},
-    'levelname': {'color': 'magenta', 'bold': True},
-    'asctime': {'color': 'green'}
-}
-coloredlogs.DEFAULT_LEVEL_STYLES = {
-    'info': {'color': 'blue'},
-    'critical': {'color': 'red', 'bold': True},
-    'error': {'color': 'red'},
-    'debug': {'color': 'green'},
-    'warning': {'color': 'yellow'}
-}
-
-coloredlogs.install(level=log_level)
-alexa_logger = logging.getLogger('alexapi')
-alexa_logger.setLevel(log_level)
-
-logger = logging.getLogger(__name__)
 
 def fadeIn(color):
     strip.setBrightness(0)
@@ -132,11 +108,9 @@ def rotateBlue():
 
 
 def setupNeoPixel():
-    logger.info("Starting NeoPixel")
     try:
         strip.begin()
     except:
-        logger.error("Neopixel failed setting up")
 
 
 

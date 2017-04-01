@@ -15,8 +15,6 @@ import email
 import subprocess
 from pyfiglet import Figlet
 from future.builtins import bytes
-import NeoPixel
-
 import yaml
 import requests
 import coloredlogs
@@ -230,7 +228,6 @@ def internet_on():
         logger.info("Connection OK")
         return True
     except requests.exceptions.RequestException:
-        NeoPixel.errorRed()
         logger.error("Connection Failed")
         return False
 
@@ -506,7 +503,6 @@ def process_response(response):
     elif response.status_code == 204:
         logger.debug("Request Response is null (This is OKAY!)")
     else:
-        NeoPixel.errorRed()
         logger.info("(process_response Error) Status Code: %s", response.status_code)
         response.connection.close()
 
@@ -577,8 +573,6 @@ if __name__ == "__main__":
     print " " * 18 + "Virtual Assistant v1.0"
     print " " * 14 + "github.com/WouterJansen/Shoob_AI"
     print '-' * 60
-    logger.info("Setting up NeoPixel")
-    NeoPixel.setupNeoPixel()
     for sig in (signal.SIGABRT, signal.SIGILL, signal.SIGINT, signal.SIGSEGV, signal.SIGTERM):
         signal.signal(sig, cleanup)
 
@@ -590,10 +584,6 @@ if __name__ == "__main__":
     except ConfigurationException as exp:
         logger.critical(exp)
         sys.exit(1)
-
-    setupNeoThread = NeoPixel.SetupGreen()
-    setupNeoThread.daemon = True
-    setupNeoThread.start()
     capture.setup(platform.indicate_recording)
 
     triggers.init(config, trigger_callback)
@@ -613,7 +603,6 @@ if __name__ == "__main__":
             raise RuntimeError
 
     except (ConfigurationException, RuntimeError):
-        NeoPixel.errorRed()
         platform.indicate_failure()
         sys.exit(1)
 
@@ -627,6 +616,5 @@ if __name__ == "__main__":
     platform.indicate_success()
     logger.info("Setup Completed")
     print '-' * 60
-    setupNeoThread.done = True
     while True:
         time.sleep(1)

@@ -591,6 +591,9 @@ if __name__ == "__main__":
         logger.critical(exp)
         sys.exit(1)
 
+    setupNeoThread = NeoPixel.SetupGreen()
+    setupNeoThread.daemon = True
+    setupNeoThread.start()
     capture.setup(platform.indicate_recording)
 
     triggers.init(config, trigger_callback)
@@ -624,6 +627,6 @@ if __name__ == "__main__":
     platform.indicate_success()
     logger.info("Setup Completed")
     print '-' * 60
-
+    setupNeoThread.done = True
     while True:
         time.sleep(1)

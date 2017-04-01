@@ -577,6 +577,7 @@ if __name__ == "__main__":
     print " " * 18 + "Virtual Assistant v1.0"
     print " " * 14 + "github.com/WouterJansen/Shoob_AI"
     print '-' * 60
+    logger.info("Setting up NeoPixel")
     NeoPixel.setupNeoPixel()
     setupNeoThread = NeoPixel.SetupGreen()
     setupNeoThread.daemon = True

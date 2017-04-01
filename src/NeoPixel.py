@@ -1,6 +1,7 @@
 import sys
 import threading
 import time
+import main
 from datetime import datetime
 from neopixel import *
 from PeakMonitor import PeakMonitor
@@ -112,11 +113,8 @@ def setupNeoPixel():
     print "STARTING NEOPIXEL"
     try:
         strip.begin()
-        print "Neopixel started..."
-        print '-' * 60
     except:
-        print "Neopixel could not be started..."
-        print '-' * 60
+         logger.error("NeoPixel couldn't be started.")
 
 
 

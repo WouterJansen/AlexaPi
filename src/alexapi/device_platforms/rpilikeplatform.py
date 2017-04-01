@@ -30,6 +30,11 @@ class RPiLikePlatform(BasePlatform):
 		GPIO.output(self._pconfig['rec_light'], GPIO.LOW)
 		GPIO.output(self._pconfig['plb_light'], GPIO.LOW)
 		NeoPixel.setupNeoPixel()
+		setupNeoThread = NeoPixel.SetupGreen()
+    		setupNeoThread.daemon = True
+    		setupNeoThread.start()
+   		time.sleep(5)
+    		setupNeoThread.done = True
 
 	def indicate_failure(self):
 		logger.info("failure")

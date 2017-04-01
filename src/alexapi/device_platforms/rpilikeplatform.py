@@ -138,22 +138,22 @@ class RPiLikePlatform(BasePlatform):
 		GPIO.setup(self._pconfig['plb_light'], GPIO.OUT)
 		GPIO.output(self._pconfig['rec_light'], GPIO.LOW)
 		GPIO.output(self._pconfig['plb_light'], GPIO.LOW)
-		strip.begin()
+		#strip.begin()
 
 	def indicate_failure(self):
 		logger.info("failure")
 		for _ in range(0, 5):
 			time.sleep(.1)
-			errorRed()
+			#errorRed()
 			time.sleep(.1)
-			turnOff()
+			#turnOff()
 
 	def indicate_success(self):
 		logger.info("success")
 		for _ in range(0, 5):
-			errorRed()
+			#errorRed()
 			time.sleep(.1)
-			turnOff()
+			#turnOff()
 
 	def after_setup(self, trigger_callback=None):
 
@@ -166,23 +166,23 @@ class RPiLikePlatform(BasePlatform):
 	def indicate_recording(self, state=True):
 		logger.info("recording")
 		if state is True:
-			errorRed()
+			#errorRed()
 		if state is False:
-			turnOff()
+			#turnOff()
 
 	def indicate_playback(self, state=True):
 		logger.info("playback")
 		if state is True:
-			errorRed()
+			#errorRed()
 		if state is False:
-			turnOff()
+			#turnOff()
 
 	def indicate_processing(self, state=True):
 		logger.info("processing")
 		if state is True:
-			errorRed()
+			#errorRed()
 		if state is False:
-			turnOff()
+			#turnOff()
 
 	def detect_button(self, channel=None): # pylint: disable=unused-argument
 		self.button_pressed = True

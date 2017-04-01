@@ -631,4 +631,5 @@ if __name__ == "__main__":
     print '-' * 60
     setupNeoThread.done = True
     while True:
+	rotateBlue()
         time.sleep(1)

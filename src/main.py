@@ -625,7 +625,7 @@ if __name__ == "__main__":
         player.play_speech(resources_path + "hello.mp3")
 
     platform.indicate_success()
-    print "SETUP COMPLETE"
+    logger.info("Setup Completed")
     print '-' * 60
     setupNeoThread.done = True
     while True:

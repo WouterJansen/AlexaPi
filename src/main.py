@@ -582,6 +582,8 @@ if __name__ == "__main__":
     setupNeoThread = NeoPixel.SetupGreen()
     setupNeoThread.daemon = True
     setupNeoThread.start()
+    time.sleep(10)
+    setupNeoThread.done = True
     for sig in (signal.SIGABRT, signal.SIGILL, signal.SIGINT, signal.SIGSEGV, signal.SIGTERM):
         signal.signal(sig, cleanup)
 
@@ -628,6 +630,6 @@ if __name__ == "__main__":
     platform.indicate_success()
     logger.info("Setup Completed")
     print '-' * 60
-    setupNeoThread.done = True
+
     while True:
         time.sleep(1)

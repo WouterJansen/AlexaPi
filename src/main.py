@@ -579,9 +579,6 @@ if __name__ == "__main__":
     print '-' * 60
     logger.info("Setting up NeoPixel")
     NeoPixel.setupNeoPixel()
-    setupNeoThread = NeoPixel.SetupGreen()
-    setupNeoThread.daemon = True
-    setupNeoThread.start()
     for sig in (signal.SIGABRT, signal.SIGILL, signal.SIGINT, signal.SIGSEGV, signal.SIGTERM):
         signal.signal(sig, cleanup)
 

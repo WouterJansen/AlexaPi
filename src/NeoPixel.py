@@ -108,11 +108,8 @@ def rotateBlue():
 
 
 def setupNeoPixel():
-    try:
-        strip.begin()
-    except:
-
-
+    strip.begin()
+    
 
 def turnOff():
     for i in range(strip.numPixels()):

@@ -22,6 +22,11 @@ class RPiLikePlatform(BasePlatform):
 		self.button_pressed = False
 
 	def setup(self):
+		GPIO.setup(self._pconfig['button'], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+		GPIO.setup(self._pconfig['rec_light'], GPIO.OUT)
+		GPIO.setup(self._pconfig['plb_light'], GPIO.OUT)
+		GPIO.output(self._pconfig['rec_light'], GPIO.LOW)
+		GPIO.output(self._pconfig['plb_light'], GPIO.LOW)
 		NeoPixel.setupNeoPixel()
 
 	def indicate_failure(self):

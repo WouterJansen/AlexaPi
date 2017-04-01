@@ -16,6 +16,7 @@ class RPiLikePlatform(BasePlatform):
 	def __init__(self, config, platform_name, p_GPIO):
 		
 		global GPIO
+		global NeoPixel
 		GPIO = p_GPIO
 		
 		super(RPiLikePlatform, self).__init__(config, platform_name)
@@ -30,7 +31,6 @@ class RPiLikePlatform(BasePlatform):
 		GPIO.output(self._pconfig['rec_light'], GPIO.LOW)
 		GPIO.output(self._pconfig['plb_light'], GPIO.LOW)
 		NeoPixel.setupNeoPixel()
-		NeoPixel.errorRed()
 
 	def indicate_failure(self):
 		logger.info("failure")
